@@ -1,0 +1,30 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  web:
+    build:
+      context: ./server
+      args:
+        - HTTP_PROXY=${HTTP_PROXY}
+        - HTTP_PROXYS=${HTTP_PROXY}
+    volumes:
+      - ./server/:/app
+    ports:
+      - "3000:3000"
+    links:
+      - mongodb
+
+  web-client:
+    build:
+      context: ./client
+      args:
+        - HTTP_PROXY=${HTTP_PROXY}
+        - HTTP_PROXYS=${HTTP_PROXY}
+    volumes:
+      - ./client/:/app
+    ports:
+      - "4200:4200"

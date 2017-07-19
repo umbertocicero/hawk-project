@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <script src="js/controller.js"></script>
+</head>
+
+<body>
+
+    <h1>Lista Eventi</h1>
+    <input type="button" value="GET LISTA" onclick="getEventi()">
+    <table id="lista_eventi"></table>
+
+    <h1>Aggiungi Evento</h1>
+
+    <form action="/add__event" method="POST" enctype='application/json' name="myform">
+        titolo: <input type="text" id="titolo"><br> data: <input type="date" id="data"><br> ora_inizio: <input type="time"
+            id="ora_inizio"><br> ora_fine: <input type="time" id="ora_fine"><br> luogo: <input type="text" id="luogo"><br> n_partecipanti:
+        <input type="number" id="n_partecipanti"><br> maggiorenni: <input type="text" id="maggiorenni"><br> mail:
+        <input type="text" id="mail"><br> telefono: <input type="text" id="telefono"><br>
+
+        <br />
+
+        <input type="button" value="Aggiungi" onclick="send()">
+        <input id="update" type="button" value="Update" onclick="send_update()">
+
+    </form>
+</body>
+
+</html>
