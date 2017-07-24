@@ -18,13 +18,13 @@ services:
     links:
       - mongodb
 
-  web-client:
-    build:
-      context: ./client
-      args:
-        - HTTP_PROXY=${HTTP_PROXY}
-        - HTTP_PROXYS=${HTTP_PROXY}
-    volumes:
-      - ./client/:/app
-    ports:
-      - "4200:4200"
+  # web-client:
+  #   build:
+  #     context: ./client
+  #     args:
+  #       - HTTP_PROXY=${HTTP_PROXY}
+  #       - HTTP_PROXYS=${HTTP_PROXY}
+  #   volumes:
+  #     - ./client/:/app
+  #   ports:
+  #     - "4200:4200"
