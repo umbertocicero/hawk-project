@@ -29,10 +29,18 @@ module.exports = {
   //  app.use('/', express.static(__dirname + '/public', options));
   //  app.use('*', express.static(__dirname + '/public', options));
 
-
-
     var router = express.Router();
+
+    // Cross Origin middleware
+    app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*")
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+      next()
+    });
+
+    
     app.use('/', router);
+
     //creiamo il middleware per preelaborare le richieste
     router.use(function (req, res, next) {
 
@@ -43,23 +51,14 @@ module.exports = {
     });
     // Deliver a list of posts when we see just '/'
 
-    router.get('/home', function (req, res) {
-      context.db.posts.findAll(function (err, posts) {
-        if (err) {
-          notFound(res);
-          return;
-        }
-        var s = "<title>My Blog</title>\n";
-        s += "<h1>My Blog</h1>\n";
-        s += '<p><a href="/new">New Post</a></p>' + "\n";
-        s += "<ul>\n";
-        for (var slug in posts) {
-          var post = posts[slug];
-          s += '<li><a href="/posts/' + post.slug + '">' + post.title + '</a></li>' + "\n";
-        }
-        s += "</ul>\n";
-        res.send(s);
-      });
+    router.get('/getTrips', function (req, res) {
+      var s = [{id:'1',desc:'my desc'},{id:'2',desc:'my desc 2'}];
+      res.status(200).json(s);
+    });
+
+    router.get('/getTrip/:id', function (req, res) {
+      var s = {id:'1',desc:'my desc'};
+      res.status(200).json(s);
     });
 
     // Deliver a specific post when we see /posts/ 
