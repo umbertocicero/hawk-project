@@ -3,7 +3,7 @@ var mongo = require('mongodb');
 
 // These variables are local to this module
 var db;
-var postCollection;
+var tripCollection;
 var context;
 var settings;
 
@@ -29,49 +29,48 @@ module.exports = db = {
         callback(err);
       }
       // Fetch a MongoDB "collection" (like a table in SQL databases)
-      postCollection = dbConnection.collection('post');
+      tripCollection = dbConnection.collection('trip');
 
       // Make sure that collection has a unique index on the "slug" field
       // before we continue. This ensures we don't have two blog posts
       // with the same slug. Once again, we pass a callback function
-      postCollection.ensureIndex("slug", { unique: true }, function(err, indexName) 
+      tripCollection.ensureIndex("id", { unique: true }, function(err, indexName) 
       {
         // Now the database is ready to use (or an error has occurred). Invoke the callback
         callback(err);
       });
     });
   },
-  // Group the methods relating to posts into a "posts" object, so we
-  // can call db.posts.findAll, etc.
-  posts: {
-    // Find all posts in reverse order (blog order)
+  
+  trips: {
+    // Find all trips in reverse order (blog order)
     findAll: function(callback) {
-      postCollection.find().sort({created: -1}).toArray(function(err, posts) {
-        callback(err, posts);
+      tripCollection.find().sort({created: -1}).toArray(function(err, trips) {
+        callback(err, trips);
       });
     },
-    // Fetch a particular post by its slug
-    findOneBySlug: function(slug, callback) {
-      postCollection.findOne({slug: slug}, function(err, post) {
-        callback(err, post);
+    // Fetch a particular trip by its id
+    findOneById: function(id, callback) {
+      tripCollection.findOne({id: id}, function(err, trip) {
+        callback(err, trip);
       });
     },
-    // Insert a new post
-    insert: function(post, callback) {
-      // Create a reasonable slug from the title
-      post.slug = db.slugify(post.title);
+    // Insert a new trip
+    insert: function(trip, callback) {
+      // Create a reasonable id from the title
+      trip.id = db.slugify(trip.title);
       // Set the creation date/time
-      post.created = new Date();
+      trip.created = new Date();
       // Pass the 'safe' option so that we can tell immediately if
-      // the insert fails (due to a duplicate slug, for instance)
-      postCollection.insert(post, { safe: true }, function(err) {
+      // the insert fails (due to a duplicate id, for instance)
+      tripCollection.insert(trip, { safe: true }, function(err) {
         if (err)
         {
           callback(err);
         } 
         else
         {
-          callback(err, post);
+          callback(err, trip);
         }
       });
     }

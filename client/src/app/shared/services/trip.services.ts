@@ -20,11 +20,11 @@ export class TripService {
   }
   
   
-  testPost(documentId, year) {
+  addTrip(trip) {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
-      let data = {numeroFattura: documentId, annoEmissione: year};
-      return this.http.post('/prmonit/restapi/invoice' + '/findInvoice', data, options)
+      let data = trip;
+      return this.http.post('/addTrip', data, options)
           .map((res: Response) => res.json());
   }
   
