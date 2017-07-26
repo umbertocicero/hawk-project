@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { TripDetailComponent } from './trip-detail.component';
 import { TripDetailRoutingModule } from './trip-detail-routing.module';

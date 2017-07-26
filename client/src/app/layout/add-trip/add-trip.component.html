@@ -4,14 +4,13 @@
 
             <form role="form">
                 <fieldset class="form-group">
-                    <label>Nome viaggio</label>
-                    <input class="form-control">
-                    <p class="help-block">Inserisci il nome del viaggio.</p>
+                    <label>Trip name</label>
+                    <input class="form-control" [(ngModel)]="trip.name" name="name">
                 </fieldset>
 
                 <fieldset class="form-group">
-                    <label>Descrizione</label>
-                    <textarea class="form-control" rows="3" placeholder="Descrizione..."></textarea>
+                    <label>Description</label>
+                    <textarea class="form-control" rows="3" placeholder="Description..." [(ngModel)]="trip.description" name="desc"></textarea>
                 </fieldset>
 
                 <fieldset class="form-group">
@@ -19,33 +18,29 @@
                     <input type="file" class="form-control-file" id="exampleInputFile">
                 </fieldset>
 
-                <div class="form-group">
-                    <label>Checkboxes</label>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value=""> Checkbox 1
-                        </label>
+                <app-modal-add-stop [stop] = "stop"></app-modal-add-stop>
+                
+                <div class="card mb-3">
+                    <div class="card-header">
+                        Legs of the journey
                     </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value=""> Checkbox 2
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value=""> Checkbox 3
-                        </label>
+                    <div class="card-block table-responsive">
+                        <ul class="list-group">
+                            <li *ngFor="let stop of trip.stops" class="list-group-item">
+                                {{stop.name}}
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
 
-                <button type="button" class="btn btn-secondary">Submit Button</button>
+                <button type="button" class="btn btn-secondary" (click)="postTrip()">Submit Button</button>
                 <button type="reset" class="btn btn-secondary">Reset Button</button>
 
             </form>
 
         </div>
-        
+
     </div>
     <!-- /.row -->
 </div>

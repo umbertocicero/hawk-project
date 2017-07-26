@@ -98,7 +98,7 @@ module.exports = {
           res.send("Error :: "+err);
         }
         else {
-          res.status(200).send(trip.id);
+          res.status(200).json({id : trip.id });
         }
       });
     });

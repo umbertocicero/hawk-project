@@ -14,22 +14,21 @@ export class TripService {
     return this.http.get(this.baseUrl + '/getTrip')
       .map((res: Response) => res.json());
   }
-  getTripById(id) {      
+  getTripById(id) {
     return this.http.get(this.baseUrl + '/getTrip/' + id)
       .map((res: Response) => res.json());
   }
-  
-  
-  addTrip(trip) {
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      let options = new RequestOptions({ headers: headers });
-      let data = trip;
-      return this.http.post('/addTrip', data, options)
-          .map((res: Response) => res.json());
-  }
-  
 
-  private handleError(error: Response | any) : Promise<any> {
+  addTrip(trip) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let data = trip;
+    return this.http.post(this.baseUrl + '/addTrip', data, options)
+      .map((res: Response) => res.json());
+  }
+
+
+  private handleError(error: Response | any): Promise<any> {
     // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {
