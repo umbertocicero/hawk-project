@@ -6,9 +6,13 @@ import { AddTripRoutingModule } from './add-trip-routing.module';
 import { AddTripComponent } from './add-trip.component';
 import { PageHeaderModule } from './../../shared';
 import { FormsModule } from '@angular/forms';
+
+import {} from '@angular/common';
+
 import {
     ModalComponent,
 } from './components';
+
 
 @NgModule({
     imports: [
@@ -16,8 +20,9 @@ import {
         AddTripRoutingModule,
         PageHeaderModule,
         NgbModule.forRoot(),
-        FormsModule
+        FormsModule 
     ],
-    declarations: [AddTripComponent, ModalComponent]
+    declarations: [AddTripComponent, ModalComponent
+    ]
 })
 export class AddTripModule { }

@@ -21,5 +21,13 @@ export class AddTripComponent implements OnInit {
     postTrip() {
         this.services.addTrip(this.trip).subscribe(data => { console.log(data); });
     }
+    addStop(event){
+        console.log(event);
+        if(this.trip.stops == undefined){
+            this.trip.stops = [] as [Stop];
+        }
+        this.trip.stops.push(Object.assign({},this.stop));
+        this.stop = new Stop();
+    }
 
 }

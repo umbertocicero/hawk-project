@@ -18,7 +18,7 @@
                     <input type="file" class="form-control-file" id="exampleInputFile">
                 </fieldset>
 
-                <app-modal-add-stop [stop] = "stop"></app-modal-add-stop>
+                <app-modal-add-stop [stop] = "stop" (add)="addStop($event)" ></app-modal-add-stop>
                 
                 <div class="card mb-3">
                     <div class="card-header">

@@ -2,12 +2,12 @@ export class Trip {
     id: string;
     name: string;
     description: string;
-    stops: [Stop];
+    stops: Stop[];
 }
 
 export class Stop {
     id: string;
-    name: string = 'test';
+    name: string;
     description: string;
     images: [object];
 }
