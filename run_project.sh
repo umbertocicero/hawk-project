@@ -1,7 +1,8 @@
 #!/bin/bash
 clear
-HTTP_PROXY=http://10.151.53.12:8080/ docker-compose up -d
-clear
 echo "docker-compose up"
+cd server && gnome-terminal -e "HTTP_PROXY=http://10.151.53.12:8080/ docker-compose up"
+echo "run server"
 cd server && gnome-terminal -e "npm start"
+echo "run client"
 cd .. && cd client && gnome-terminal -e "npm start"
