@@ -28,10 +28,10 @@
                                 <label for="photo">File input</label>
                                 <!-- <input type="file" (change)="onChange($event)" [multiple]="multiple" style="display: none;" /> -->
                                 <!-- <input type="file" class="form-control-file" id="photo" (change)="onChange($event)"> -->
-                           
-                           <input id="photo" type="file" class="form-control-file" />
-<!-- button to trigger the file upload when submitted -->
-<button type="button" class="btn btn-success btn-s" (click)="upload()">
+
+                                <input id="photo" type="file" class="form-control-file" (change)="fileChanged($event)"/>
+                                <!-- button to trigger the file upload when submitted -->
+                                <button type="button" class="btn btn-success btn-s" (click)="upload()" >Add</button>
                             </fieldset>
                         </div>
 
