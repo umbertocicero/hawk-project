@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Trip } from './../../../../shared/dto';
 
 @Component({
   selector: 'app-timeline-stops',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./timeline-stops.component.scss']
 })
 export class TimelineStopsComponent implements OnInit {
+
+  @Input() trip: Trip;
 
   constructor() { }
 

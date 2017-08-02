@@ -1,5 +1,42 @@
 <div class="card-block">
+
+    <div class="row">
+        <div class="col">
+            <div class="d-inline-block">
+                <h2>{{trip.name}}</h2>
+            </div>
+        </div>
+        <div class="col text-right">
+            <div class="d-inline-block">
+                <h2>
+                    <a [routerLink]="['/add-trip', trip.id]"><i class="fa fa-pencil-square-o"></i></a>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <h3>{{trip.description}}</h3>
+    <p><small class="text-muted"><i class="fa fa-clock-o"></i> Created: {{trip.created}}</small> </p>
     <ul class="timeline">
+
+        <li *ngFor="let stop of trip.stops" class="timeline-inverted">
+            <div class="timeline-badge"><i class="fa fa-check"></i>
+            </div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">{{stop.name}}</h4>
+                </div>
+                <div class="timeline-body">
+                    <p>{{stop.description}}</p>
+                </div>
+            </div>
+        </li>
+
+
+
+
+        <!--
+
         <li>
             <div class="timeline-badge"><i class="fa fa-check"></i>
             </div>
@@ -10,7 +47,9 @@
                     </p>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis
+                        exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas
+                        suscipit facere rem dicta, debitis.</p>
                 </div>
             </div>
         </li>
@@ -22,8 +61,12 @@
                     <h4 class="timeline-title">Lorem ipsum dolor</h4>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi provident cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi officiis alias, officia repellendus.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora eos, nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae minus eaque facere.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi provident
+                        cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi officiis alias,
+                        officia repellendus.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora eos,
+                        nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae
+                        minus eaque facere.</p>
                 </div>
             </div>
         </li>
@@ -35,7 +78,9 @@
                     <h4 class="timeline-title">Lorem ipsum dolor</h4>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus numquam facilis enim eaque, tenetur nam id qui vel velit similique nihil iure molestias aliquam, voluptatem totam quaerat, magni commodi quisquam.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus numquam facilis enim eaque, tenetur
+                        nam id qui vel velit similique nihil iure molestias aliquam, voluptatem totam quaerat, magni commodi
+                        quisquam.</p>
                 </div>
             </div>
         </li>
@@ -45,7 +90,9 @@
                     <h4 class="timeline-title">Lorem ipsum dolor</h4>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates est quaerat asperiores sapiente, eligendi, nihil. Itaque quos, alias sapiente rerum quas odit! Aperiam officiis quidem delectus libero, omnis ut debitis!</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates est quaerat asperiores sapiente,
+                        eligendi, nihil. Itaque quos, alias sapiente rerum quas odit! Aperiam officiis quidem delectus libero,
+                        omnis ut debitis!</p>
                 </div>
             </div>
         </li>
@@ -57,7 +104,9 @@
                     <h4 class="timeline-title">Lorem ipsum dolor</h4>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum, atque.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae
+                        excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum,
+                        atque.</p>
                     <hr>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -84,7 +133,9 @@
                     <h4 class="timeline-title">Lorem ipsum dolor</h4>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita, incidunt unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi. Consequuntur, commodi.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita, incidunt
+                        unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi. Consequuntur,
+                        commodi.</p>
                 </div>
             </div>
         </li>
@@ -96,9 +147,12 @@
                     <h4 class="timeline-title">Lorem ipsum dolor</h4>
                 </div>
                 <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt quisquam maxime neque eaque.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia
+                        voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt
+                        quisquam maxime neque eaque.</p>
                 </div>
             </div>
         </li>
+        -->
     </ul>
 </div>

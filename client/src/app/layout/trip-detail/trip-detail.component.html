@@ -1,17 +1,18 @@
 <div [@routerTransition]>
     <hr />
     <div class="row">
-        <div class="col-lg">
+        <div class="col-lg-12">
             <div class="card card-default">
                 <div class="card-header">
-                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+                    <i class="fa fa-clock-o fa-fw"></i> {{trip.name}}
                 </div>
                 <!-- /.card-header -->
-                <app-timeline-stops></app-timeline-stops>
+                <app-timeline-stops  [trip] = "trip"></app-timeline-stops>
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
         </div>
+        
         
     </div>
 </div>

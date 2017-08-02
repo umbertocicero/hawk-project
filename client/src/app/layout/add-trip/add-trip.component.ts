@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TripService } from './../../shared/services/trip.services';
+import { ActivatedRoute } from '@angular/router';
 import { Trip, Stop } from './../../shared/dto';
 
 @Component({
@@ -11,22 +12,38 @@ import { Trip, Stop } from './../../shared/dto';
     providers: [TripService]
 })
 export class AddTripComponent implements OnInit {
-    constructor(private services: TripService) { }
-
-    ngOnInit() { }
+    constructor(private services: TripService, private route: ActivatedRoute) { }
 
     trip: Trip = new Trip();
     stop: Stop = new Stop();
 
-    postTrip() {
-        this.services.addTrip(this.trip).subscribe(data => { console.log(data); });
+    editMode: boolean = false;
+
+    ngOnInit() {
+        this.route.params.subscribe(params => {
+            var id = params['id'];
+            if (id) {
+                this.services.getTrip(id).subscribe(data => { this.editMode = true; this.trip = data });
+            }
+        })
     }
-    addStop(event){
+
+
+
+    postTrip() {
+        if(this.editMode){
+            alert('viaggio da modificare');
+        } else {
+            this.services.addTrip(this.trip).subscribe(data => { alert('viaggio inserito: ' + data); });
+        }
+    }
+
+    addStop(event) {
         console.log(event);
-        if(this.trip.stops == undefined){
+        if (this.trip.stops == undefined) {
             this.trip.stops = [] as [Stop];
         }
-        this.trip.stops.push(Object.assign({},this.stop));
+        this.trip.stops.push(Object.assign({}, this.stop));
         this.stop = new Stop();
     }
 

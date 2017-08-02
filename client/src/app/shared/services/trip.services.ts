@@ -15,10 +15,6 @@ export class TripService {
     return this.http.get(url)
       .map((res: Response) => res.json());
   }
-  getTripById(id) {
-    return this.http.get(this.baseUrl + '/getTrip/' + id)
-      .map((res: Response) => res.json());
-  }
 
   addTrip(trip) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
