@@ -26,19 +26,19 @@ module.exports = {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(express.static(__dirname + '/public'));
-  //  app.use('/', express.static(__dirname + '/public', options));
-  //  app.use('*', express.static(__dirname + '/public', options));
+    //  app.use('/', express.static(__dirname + '/public', options));
+    //  app.use('*', express.static(__dirname + '/public', options));
 
     var router = express.Router();
 
     // Cross Origin middleware
-    app.use(function(req, res, next) {
+    app.use(function (req, res, next) {
       res.header("Access-Control-Allow-Origin", "*")
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
       next()
     });
 
-    
+
     app.use('/', router);
 
     //creiamo il middleware per preelaborare le richieste
@@ -51,36 +51,19 @@ module.exports = {
     });
     // Deliver a list of posts when we see just '/'
 
-    router.get('/getTrips', function (req, res) {
-      var s = [{id:'1',desc:'my desc'},{id:'2',desc:'my desc 2'}];
-      res.status(200).json(s);
+    router.get('/getTrip', function (req, res) {
+      context.db.trips.findAll(function (err, trips) {
+        if (err) {
+          res.send("Error :: " + err);
+        } else {
+          res.status(200).json(trips);
+        }
+      });
     });
 
     router.get('/getTrip/:id', function (req, res) {
-      var s = {id:'1',desc:'my desc'};
+      var s = { id: '1', desc: 'my desc' };
       res.status(200).json(s);
-    });
-
-    // Deliver a specific post when we see /posts/ 
-    router.get('/posts/:slug', function (req, res) {
-      // context.db.posts.findOneBySlug(req.params.slug, function (err, post) {
-      //   if (err || (!post)) {
-      //     notFound(res);
-      //     return;
-      //   }
-      //   var s = "<title>" + post.title + "</title>\n";
-      //   s += "<h1><a href='/'>My Blog</a></h1>\n";
-      //   s += "<h2>" + post.title + "</h2>\n";
-      //   s += post.body;
-      //   res.send(s);
-      // });
-    });
-
-    // Deliver a "new post" form when we see /new.
-    // POST it right back to the same URL; the next route
-    // below will answer 
-    router.get('/new', function (req, res) {
-      newPost(res);
     });
 
     // Save a new post when we see a POST request
@@ -88,22 +71,22 @@ module.exports = {
     // from the route above)
     router.post('/addTrip', function (req, res) {
       var trip = req.body;
-	    console.log(trip);
-     // var trip = _.pick(req.body, 'title', 'body');
+      console.log(trip);
+      // var trip = _.pick(req.body, 'title', 'body');
       context.db.trips.insert(trip, function (err, trip) {
         if (err) {
           // Probably a duplicate slug, ask the user to try again
           // with a more distinctive title. We'll fix this
           // automatically in our next installment
-          res.send("Error :: "+err);
+          res.send("Error :: " + err);
         }
         else {
-          res.status(200).json({id : trip.id });
+          res.status(200).json({ id: trip.id });
         }
       });
     });
 
-    
+
 
     router.get('*', function (req, res) {
       notFound(res);
