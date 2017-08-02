@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class TripService {
@@ -11,7 +12,7 @@ export class TripService {
   private baseUrl = 'http://localhost:3000';
 
   getTrip(id) {
-     let url = this.baseUrl + '/getTrip' + (id?'/'+id:'');
+    let url = this.baseUrl + '/getTrip' + (id ? '/' + id : '');
     return this.http.get(url)
       .map((res: Response) => res.json());
   }
@@ -21,6 +22,17 @@ export class TripService {
     let options = new RequestOptions({ headers: headers });
     let data = trip;
     return this.http.post(this.baseUrl + '/addTrip', data, options)
+      .map((res: Response) => res.json());
+  }
+
+  updateTrip(trip) {
+    let data = trip;
+    return this.http.put(this.baseUrl + '/updateTrip', data)
+      .map((res: Response) => res.json());
+  }
+    
+  deleteTrip(id) {
+    return this.http.delete(this.baseUrl + '/deleteTrip/' + id)
       .map((res: Response) => res.json());
   }
 

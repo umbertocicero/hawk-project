@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TripService } from './../../shared/services/trip.services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Trip, Stop } from './../../shared/dto';
 
 @Component({
@@ -12,7 +12,11 @@ import { Trip, Stop } from './../../shared/dto';
     providers: [TripService]
 })
 export class AddTripComponent implements OnInit {
-    constructor(private services: TripService, private route: ActivatedRoute) { }
+    constructor(
+        private services: TripService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) { }
 
     trip: Trip = new Trip();
     stop: Stop = new Stop();
@@ -31,10 +35,14 @@ export class AddTripComponent implements OnInit {
 
 
     postTrip() {
-        if(this.editMode){
-            alert('viaggio da modificare');
+        if (this.editMode) {
+            this.services.updateTrip(this.trip).subscribe(data => { this.router.navigate(['/trip-detail/' + data.id]); });
         } else {
-            this.services.addTrip(this.trip).subscribe(data => { alert('viaggio inserito: ' + data); });
+            this.services.addTrip(this.trip).subscribe(data => {
+                this.editMode = true;
+                this.trip.id = data.id;
+                alert('viaggio inserito: ' + data);
+            });
         }
     }
 

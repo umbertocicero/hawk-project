@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var express = require('express');
+var cors = require('cors')
 var bodyParser = require('body-parser');
 
 module.exports = {
@@ -21,6 +22,9 @@ module.exports = {
     // Create an Express app object to add routes to and add
     // it to the context
     var app = context.app = express();
+
+    app.use(cors());
+
     // The "body parser" gives us the parameters of a 
     // POST request is a convenient req.body object
     app.use(bodyParser.json());
@@ -33,8 +37,8 @@ module.exports = {
 
     // Cross Origin middleware
     app.use(function (req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*")
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+      // res.header("Access-Control-Allow-Origin", "*")
+      // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
       next()
     });
 
@@ -64,7 +68,7 @@ module.exports = {
     router.get('/getTrip/:id?', function (req, res) {
       let id = req.params['id'];
       if (id) {
-        console.log('findOneById/'+id);
+        console.log('findOneById/' + id);
         context.db.trips.findOneById(id, function (err, trip) {
           if (err) {
             res.send("Error :: " + err);
@@ -103,7 +107,38 @@ module.exports = {
         }
       });
     });
+    router.put('/updateTrip', function (req, res) {
+      var trip = req.body;
+      console.log(trip);
+      // var trip = _.pick(req.body, 'title', 'body');
+      context.db.trips.update(trip, function (err, trip) {
+        if (err) {
+          // Probably a duplicate slug, ask the user to try again
+          // with a more distinctive title. We'll fix this
+          // automatically in our next installment
+          res.send("Error :: " + err);
+        }
+        else {
+          res.status(200).json({ id: trip.id });
+        }
+      });
 
+    });
+
+    router.delete('/deleteTrip/:id', function (req, res) {
+      let tripId = req.params['id'];
+      context.db.trips.delete(tripId, function (err, trip) {
+        if (err) {
+          // Probably a duplicate slug, ask the user to try again
+          // with a more distinctive title. We'll fix this
+          // automatically in our next installment
+          res.send("Error :: " + err);
+        }
+        else {
+          res.status(200).json({ id: tripId });
+        }
+      });
+    });
 
 
     router.get('*', function (req, res) {

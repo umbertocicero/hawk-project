@@ -7,7 +7,7 @@
                     <i class="fa fa-clock-o fa-fw"></i> {{trip.name}}
                 </div>
                 <!-- /.card-header -->
-                <app-timeline-stops  [trip] = "trip"></app-timeline-stops>
+                <app-timeline-stops  [trip] = "trip" (delete)="deleteTrip($event)"></app-timeline-stops>
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->

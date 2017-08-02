@@ -9,7 +9,13 @@
         <div class="col text-right">
             <div class="d-inline-block">
                 <h2>
-                    <a [routerLink]="['/add-trip', trip.id]"><i class="fa fa-pencil-square-o"></i></a>
+                    <!-- <a [routerLink]="['/add-trip', trip.id]"><i class="fa fa-pencil-square-o"></i></a>
+                     <a (click)="deleteTrip(trip.id)"><i class="fa fa-eraser"></i></a> -->
+
+                    <button type="button" class="btn btn-sm btn-primary" [routerLink]="['/add-trip', trip.id]"><i class="fa fa-pencil-square-o"></i></button>
+
+                    <button type="button" class="btn btn-sm btn-warning" (click)="deleteTrip(trip.id)"><i class="fa fa-eraser"></i></button>
+        
                 </h2>
             </div>
         </div>
@@ -112,47 +118,48 @@
                         <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-gear"></i>  <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a>
-                            </li>
-                            <li><a href="#">Another action</a>
-                            </li>
-                            <li><a href="#">Something else here</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a>
+                        </li>
+                        <li><a href="#">Another action</a>
+                        </li>
+                        <li><a href="#">Something else here</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a>
+                        </li>
+                    </ul>
             </div>
-        </li>
-        <li>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                </div>
-                <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita, incidunt
-                        unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi. Consequuntur,
-                        commodi.</p>
-                </div>
+        </div>
+    </div>
+    </li>
+    <li>
+        <div class="timeline-panel">
+            <div class="timeline-heading">
+                <h4 class="timeline-title">Lorem ipsum dolor</h4>
             </div>
-        </li>
-        <li class="timeline-inverted">
-            <div class="timeline-badge success"><i class="fa fa-graduation-cap"></i>
+            <div class="timeline-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita, incidunt
+                    unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi. Consequuntur,
+                    commodi.
+                </p>
             </div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                </div>
-                <div class="timeline-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia
-                        voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt
-                        quisquam maxime neque eaque.</p>
-                </div>
+        </div>
+    </li>
+    <li class="timeline-inverted">
+        <div class="timeline-badge success"><i class="fa fa-graduation-cap"></i>
+        </div>
+        <div class="timeline-panel">
+            <div class="timeline-heading">
+                <h4 class="timeline-title">Lorem ipsum dolor</h4>
             </div>
-        </li>
-        -->
+            <div class="timeline-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia voluptas
+                    debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt quisquam
+                    maxime neque eaque.</p>
+            </div>
+        </div>
+    </li>
+    -->
     </ul>
 </div>

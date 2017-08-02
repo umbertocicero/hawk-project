@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TripService } from './../../shared/services/trip.services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Trip } from './../../shared/dto';
 
 @Component({
@@ -15,6 +15,7 @@ export class TripDetailComponent implements OnInit {
     constructor(
         private services: TripService,
         private route: ActivatedRoute,
+        private router: Router
     ) { }
     ngOnInit() {
         this.route.params.subscribe(params => {
@@ -26,4 +27,11 @@ export class TripDetailComponent implements OnInit {
     }
 
     trip: Trip = new Trip();
+
+    deleteTrip(event) {
+        this.services.deleteTrip(event).subscribe(data => {
+            console.log(data);
+            this.router.navigate(['/home']);
+        });
+    }
 }
