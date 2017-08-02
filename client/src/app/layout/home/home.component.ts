@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
         trips = new Array();
     ngOnInit() { 
 
-        this.services.getTrips().subscribe(data => {console.log(data); this.trips = data});
+        this.services.getTrip(null).subscribe(data => {console.log(data); this.trips = data});
 
     }
 }

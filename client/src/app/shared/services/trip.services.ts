@@ -10,8 +10,9 @@ export class TripService {
   // private instance variable to hold base url
   private baseUrl = 'http://localhost:3000';
 
-  getTrips() {
-    return this.http.get(this.baseUrl + '/getTrip')
+  getTrip(id) {
+     let url = this.baseUrl + '/getTrip' + (id?'/'+id:'');
+    return this.http.get(url)
       .map((res: Response) => res.json());
   }
   getTripById(id) {

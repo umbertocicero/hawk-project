@@ -8,18 +8,19 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-block table-responsive">
-                        <ul class="list-group">
-                            <li *ngFor="let trip of trips" class="list-group-item">
-                                <div class="card-block table-responsive">
+                    <ul class="list-group">
+                        <li *ngFor="let trip of trips" class="list-group-item">
+                            <div class="card-block table-responsive">
                                 <p> Id: {{trip.id}} - Name: {{trip.name}} </p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                                <a [routerLink]="['/trip-detail', trip.id]">Show Trip</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
         </div>
-        
+
     </div>
 </div>

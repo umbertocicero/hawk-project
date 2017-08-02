@@ -51,21 +51,39 @@ module.exports = {
     });
     // Deliver a list of posts when we see just '/'
 
-    router.get('/getTrip', function (req, res) {
-      context.db.trips.findAll(function (err, trips) {
-        if (err) {
-          res.send("Error :: " + err);
-        } else {
-          res.status(200).json(trips);
-        }
-      });
-    });
+    // router.get('/getTrip', function (req, res) {
+    //   context.db.trips.findAll(function (err, trips) {
+    //     if (err) {
+    //       res.send("Error :: " + err);
+    //     } else {
+    //       res.status(200).json(trips);
+    //     }
+    //   });
+    // });
 
-    router.get('/getTrip/:id', function (req, res) {
-      var s = { id: '1', desc: 'my desc' };
-      res.status(200).json(s);
-    });
+    router.get('/getTrip/:id?', function (req, res) {
+      let id = req.params['id'];
+      if (id) {
+        console.log('findOneById/'+id);
+        context.db.trips.findOneById(id, function (err, trip) {
+          if (err) {
+            res.send("Error :: " + err);
+          } else {
+            res.status(200).json(trip);
+          }
+        });
+      } else {
+        console.log('findAll');
+        context.db.trips.findAll(function (err, trips) {
+          if (err) {
+            res.send("Error :: " + err);
+          } else {
+            res.status(200).json(trips);
+          }
+        });
 
+      }
+    });
     // Save a new post when we see a POST request
     // for /new (note this is enough to distinguish it
     // from the route above)

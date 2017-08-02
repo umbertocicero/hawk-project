@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { TripDetailComponent } from './trip-detail.component';
 
 const routes: Routes = [
-    { path: '', component: TripDetailComponent }
+    { path: '', component: TripDetailComponent },
+    // { path: ':id', component: TripDetailComponent }
 ];
 
 @NgModule({

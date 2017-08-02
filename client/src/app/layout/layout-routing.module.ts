@@ -7,7 +7,13 @@ const routes: Routes = [
         path: '', component: LayoutComponent,
         children: [
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
-            { path: 'trip-detail', loadChildren: './trip-detail/trip-detail.module#TripDetailModule' },
+            // { path: 'trip-detail/:id?', loadChildren: './trip-detail/trip-detail.module#TripDetailModule' },
+            {
+                path: 'trip-detail', children: [
+                    { path: '', loadChildren: './trip-detail/trip-detail.module#TripDetailModule' },
+                    { path: ':id', loadChildren: './trip-detail/trip-detail.module#TripDetailModule' }
+                ]
+            },
             { path: 'add-trip', loadChildren: './add-trip/add-trip.module#AddTripModule' },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
             { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
