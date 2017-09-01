@@ -10,4 +10,5 @@ export class Stop {
     name: string;
     description: string;
     images: [object];
+    coordinates: [number,number];
 }
