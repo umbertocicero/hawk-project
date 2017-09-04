@@ -24,9 +24,7 @@
     <h3>{{trip.description}}</h3>
     <p><small class="text-muted"><i class="fa fa-clock-o"></i> Created: {{trip.created}}</small> </p>
 
-    <div id="map" class="map" style="width: 100%; height:20vh; ">
-        <div id="tooltip" class="tooltip" style="display: none;"></div>
-    </div>
+    <app-map-landscape [trip] = "trip" id="map"> </app-map-landscape>
 
     <ul class="timeline">
 

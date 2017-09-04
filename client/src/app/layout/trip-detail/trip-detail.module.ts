@@ -8,6 +8,9 @@ import { PageHeaderModule } from './../../shared';
 import {
     TimelineStopsComponent
 } from './components';
+import {
+    MapLandscapeComponent,
+} from './../../shared/components/map';
 
 @NgModule({
     imports: [
@@ -15,6 +18,6 @@ import {
         TripDetailRoutingModule,
         PageHeaderModule
     ],
-    declarations: [TripDetailComponent, TimelineStopsComponent]
+    declarations: [TripDetailComponent, TimelineStopsComponent, MapLandscapeComponent]
 })
 export class TripDetailModule { }

@@ -18,11 +18,14 @@
                     <input type="file" class="form-control-file" id="exampleInputFile">
                 </fieldset>
 
-                <app-modal-add-stop [stop] = "stop" (add)="addStop($event)" ></app-modal-add-stop>
-                
+                <app-modal-add-stop [stop]="stop" (add)="addStop($event)"></app-modal-add-stop>
+
                 <div class="card mb-3">
                     <div class="card-header">
-                        Legs of the journey
+                        <div class="row vertical-align">
+                            <div class="col-md-6">Legs of the journey</div>
+                            <div class="col-md-6"><span class="pull-right"><button type="button" class="btn btn-secondary" (click)="openAddModal()">+</button></span></div>
+                        </div>
                     </div>
                     <div class="card-block table-responsive">
                         <ul class="list-group">

@@ -1,0 +1,11 @@
+<div>
+
+    <button type="button" class="btn btn-success btn-s" (click)="openMap()" *ngIf="!mapOpened">Open Map</button>
+    <div id="map_div" class="map" style="width: 100%;" [ngStyle]="{ 'height': height }">
+
+    </div>
+
+    <img src="assets/images/marker_red.png" style="width:27px; height:34px;  position: absolute;" [ngStyle]="{ 'top': top, 'left': left}"
+        *ngIf="mapOpened">
+    <br />
+</div>

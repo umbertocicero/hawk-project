@@ -22,11 +22,11 @@
             "styles": [
                 "../node_modules/font-awesome/css/font-awesome.css",
                 "styles/app.scss",
-                "../node_modules/openlayers/dist/ol.css",
+                "../node_modules/openlayers/dist/ol.css"
             ],
             "scripts": [
                 "../node_modules/chart.js/dist/Chart.js",
-                "../node_modules/openlayers/dist/ol.js",
+                "../node_modules/openlayers/dist/ol.js"
             ],
             "environmentSource": "environments/environment.ts",
             "environments": {

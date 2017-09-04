@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TripService } from './../../shared/services/trip.services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trip, Stop } from './../../shared/dto';
+
+import { ModalComponent } from './components/modal/modal.component';
+
+
 
 @Component({
     selector: 'app-add-trip',
@@ -12,6 +16,10 @@ import { Trip, Stop } from './../../shared/dto';
     providers: [TripService]
 })
 export class AddTripComponent implements OnInit {
+
+    @ViewChild(ModalComponent)
+    private addModal: ModalComponent;
+
     constructor(
         private services: TripService,
         private route: ActivatedRoute,
@@ -41,7 +49,7 @@ export class AddTripComponent implements OnInit {
             this.services.addTrip(this.trip).subscribe(data => {
                 this.editMode = true;
                 this.trip.id = data.id;
-                alert('viaggio inserito: ' + data);
+                this.router.navigate(['/trip-detail/' + data.id]);
             });
         }
     }
@@ -53,6 +61,10 @@ export class AddTripComponent implements OnInit {
         }
         this.trip.stops.push(Object.assign({}, this.stop));
         this.stop = new Stop();
+    }
+
+    openAddModal(){
+        this.addModal.open();
     }
 
 }

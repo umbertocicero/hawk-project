@@ -12,6 +12,9 @@ import {} from '@angular/common';
 import {
     ModalComponent,
 } from './components';
+import {
+    MapCenteredComponent,
+} from './../../shared/components/map';
 
 
 @NgModule({
@@ -22,7 +25,7 @@ import {
         NgbModule.forRoot(),
         FormsModule 
     ],
-    declarations: [AddTripComponent, ModalComponent
+    declarations: [AddTripComponent, ModalComponent, MapCenteredComponent
     ]
 })
 export class AddTripModule { }
