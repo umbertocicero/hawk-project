@@ -11,12 +11,12 @@ import { TripService } from './../../shared/services/trip.services';
 })
 export class HomeComponent implements OnInit {
     constructor(
-         private services: TripService
-    ){ }
-        trips = new Array();
-    ngOnInit() { 
+        private services: TripService
+    ) { }
 
-        this.services.getTrip(null).subscribe(data => {console.log(data); this.trips = data});
+    trips = new Array();
 
+    ngOnInit() {
+        this.services.getTrip(null).subscribe(data => { this.trips = data });
     }
 }

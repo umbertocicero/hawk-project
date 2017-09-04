@@ -5,14 +5,25 @@ import { Trip } from './../../../../shared/dto';
     selector: 'app-map-landscape',
     templateUrl: './map.component.html',
     styleUrls: ['./map.component.scss'],
-
-
 })
-export class MapLandscapeComponent implements OnInit, AfterViewInit  {
+export class MapLandscapeComponent implements OnInit, AfterViewInit {
 
-    @Input() trip: Trip;
 
-    height: string = '0vh';
+    //@Input()
+    trip: Trip;
+    inizialized: boolean = false;
+
+    @Input('trip')
+    set value(val: Trip) {
+        this.trip = val;
+        if (this.trip && this.trip!=null && this.trip.stops!=null) {
+            this.inizialized = true;
+            this.openMap();
+        }
+
+    }
+
+    height: string = '20vh';
     top: string = '0px';
     left: string = '0px';
     mapOpened: boolean = false;
@@ -22,25 +33,21 @@ export class MapLandscapeComponent implements OnInit, AfterViewInit  {
     coordinates: [number, number];
     @Output() addCoordinates: EventEmitter<[number, number]> = new EventEmitter();
 
-    ngOnInit() {
-       
-    }
+    ngOnInit() { }
     ngAfterViewInit() {
-        this.openMap();
+       // this.openMap();
     }
 
     constructor() { }
 
-
-
     openMap() {
-        this.height = '20vh';
         this.mapOpened = false;
         var _initMap = this.initMap;
         var _map = this.map;
         var _this = this;
         function func() {
             _this.initMap();
+
         }
         setTimeout(func, 100);
     }
@@ -68,9 +75,13 @@ export class MapLandscapeComponent implements OnInit, AfterViewInit  {
             }),
             logo: false
         });
-        console.log('aaa' + this.trip.stops);
+
         this.drawMap(this.trip);
-        //  this.initTooltip();
+        this.initTooltip();
+
+        this.map.updateSize();
+        this.map.render();
+        this.map.renderSync();
     }
 
     initTooltip() {
@@ -156,7 +167,6 @@ export class MapLandscapeComponent implements OnInit, AfterViewInit  {
                     maxZoom: 13
                 });
 
-
                 /*          
                 this.map.setView(new ol.View({
                   center: this.map.getView().getCenter(),
@@ -165,7 +175,8 @@ export class MapLandscapeComponent implements OnInit, AfterViewInit  {
                 */
 
             } else {
-                this.height = '0vh';
+                this.mapOpened = false;
+                //  this.height = '0vh';
             }
         }
     }

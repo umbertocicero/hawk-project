@@ -12,6 +12,10 @@ import { Trip } from './../../shared/dto';
     providers: [TripService]
 })
 export class TripDetailComponent implements OnInit {
+
+    trip: Trip = new Trip();
+
+    //es;
     constructor(
         private services: TripService,
         private route: ActivatedRoute,
@@ -20,13 +24,23 @@ export class TripDetailComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe(params => {
             var id = params['id'];
+            
             if (id) {
-                this.services.getTrip(id).subscribe(data => { console.log(data); this.trip = data });
+
+                var __this = this;
+                
+               // setTimeout(function(){ __this.trip = __this.es }, 3000);
+
+
+                this.services.getTrip(id).subscribe(data => {
+                    //this.es=data;
+                    this.trip = data 
+                    });
             }
         })
     }
 
-    trip: Trip = new Trip();
+   
 
     deleteTrip(event) {
         this.services.deleteTrip(event).subscribe(data => {
