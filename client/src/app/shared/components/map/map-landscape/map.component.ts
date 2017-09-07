@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, AfterViewInit, EventEmitter, ElementRef } from '@angular/core';
 import { Trip } from './../../../../shared/dto';
+import * as ol from 'openlayers';
 
 @Component({
     selector: 'app-map-landscape',
@@ -16,14 +17,14 @@ export class MapLandscapeComponent implements OnInit, AfterViewInit {
     @Input('trip')
     set value(val: Trip) {
         this.trip = val;
-        if (this.trip && this.trip!=null && this.trip.stops!=null) {
+        if (this.trip && this.trip != null && this.trip.stops != null) {
             this.inizialized = true;
             this.openMap();
         }
 
     }
 
-    height: string = '20vh';
+    height: string = '30vh';
     top: string = '0px';
     left: string = '0px';
     mapOpened: boolean = false;
@@ -35,7 +36,7 @@ export class MapLandscapeComponent implements OnInit, AfterViewInit {
 
     ngOnInit() { }
     ngAfterViewInit() {
-       // this.openMap();
+        // this.openMap();
     }
 
     constructor() { }

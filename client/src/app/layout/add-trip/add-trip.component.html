@@ -18,19 +18,26 @@
                     <input type="file" class="form-control-file" id="exampleInputFile">
                 </fieldset>
 
-                <app-modal-add-stop [stop]="stop" (add)="addStop($event)"></app-modal-add-stop>
+                <app-modal-add-stop (add)="addStop($event)"></app-modal-add-stop>
 
                 <div class="card mb-3">
                     <div class="card-header">
                         <div class="row vertical-align">
-                            <div class="col-md-6">Legs of the journey</div>
-                            <div class="col-md-6"><span class="pull-right"><button type="button" class="btn btn-secondary" (click)="openAddModal()">+</button></span></div>
+                            <div class="col-md-9">Legs of the journey</div>
+                            <div class="col-md-3"><span class="pull-right"><button type="button" class="btn btn-secondary btn-sm" (click)="openAddModal()"><i class="fa fa-plus" aria-hidden="true"></i></button></span></div>
                         </div>
                     </div>
                     <div class="card-block table-responsive">
                         <ul class="list-group">
                             <li *ngFor="let stop of trip.stops" class="list-group-item">
-                                {{stop.name}}
+
+                                <div class="row vertical-align" style="width: 100%;">
+                                    <div class="col-md-9">{{stop.name}}</div>
+
+                                    <div class="col-md-3">
+                                        <span class="pull-right"><button type="button" class="btn btn-secondary btn-sm" (click)="editStop(stop)"><i class="fa fa-pencil-square-o"></i></button></span>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>

@@ -2,11 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TripService } from './../../shared/services/trip.services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Trip, Stop } from './../../shared/dto';
-
+import { Trip, Stop, addId } from './../../shared/dto';
 import { ModalComponent } from './components/modal/modal.component';
-
-
 
 @Component({
     selector: 'app-add-trip',
@@ -27,7 +24,6 @@ export class AddTripComponent implements OnInit {
     ) { }
 
     trip: Trip = new Trip();
-    stop: Stop = new Stop();
 
     editMode: boolean = false;
 
@@ -46,25 +42,49 @@ export class AddTripComponent implements OnInit {
         if (this.editMode) {
             this.services.updateTrip(this.trip).subscribe(data => { this.router.navigate(['/trip-detail/' + data.id]); });
         } else {
+        /*     
             this.services.addTrip(this.trip).subscribe(data => {
                 this.editMode = true;
                 this.trip.id = data.id;
                 this.router.navigate(['/trip-detail/' + data.id]);
             });
+ */
+var self = this;
+            this.services.addTrip(this.trip, function(data){
+                self.editMode = true;
+                self.trip.id = data.id;
+                self.router.navigate(['/trip-detail/' + data.id]);
+            });
         }
     }
 
     addStop(event) {
-        console.log(event);
+        var stop = event.stop;
+        var type = event.type;
         if (this.trip.stops == undefined) {
             this.trip.stops = [] as [Stop];
         }
-        this.trip.stops.push(Object.assign({}, this.stop));
-        this.stop = new Stop();
+        if (type == 'add') {
+            this.trip.stops.push(Object.assign({}, stop));
+        } else if (type == 'edit') {
+            this.trip.stops.forEach(function(element, index, object){
+                if(element.id == stop.id){
+                    var newElement = Object.assign({}, stop)
+                    object.splice(index, 1,newElement);
+                }
+            });
+        }
     }
 
-    openAddModal(){
-        this.addModal.open();
+    editStop(stop: Stop) {
+        if (stop.id == null) {
+            addId(stop);
+        }
+        this.addModal.open(Object.assign({}, stop));
+    }
+
+    openAddModal() {
+        this.addModal.open(null);
     }
 
 }

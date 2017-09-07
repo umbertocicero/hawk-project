@@ -1,7 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { TripService } from './../../../../shared/services/trip.services';
 import { Trip } from './../../../../shared/dto';
-import * as ol from 'openlayers';
 
 //declare var ol: any;
 
@@ -32,28 +31,26 @@ export class TimelineStopsComponent implements OnInit, OnChanges  {
   constructor() { }
 
   ngOnInit() {
-    
-  }
 
+    
+  } 
+  
   ngOnChanges() {
+    
     var trip = this.trip;
     if (trip != null && trip.stops != null) {
-
+      
       var features = [];
-
       trip.stops.forEach(element => {
-
-
         var coords: [number, number] = element.coordinates;
-
         if (coords) {
           this.mapOpened = true;
         }
       });
     }
   }
-
   deleteTrip(id) {
     this.delete.emit(id);
   }
+
 }

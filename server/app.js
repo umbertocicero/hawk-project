@@ -2,6 +2,8 @@ var _ = require('underscore');
 var express = require('express');
 var cors = require('cors')
 var bodyParser = require('body-parser');
+var imagesManager = require('./services/imagesManager.js');
+var async = require('async');
 
 module.exports = {
   init: function (context, callback) {
@@ -27,11 +29,25 @@ module.exports = {
 
     // The "body parser" gives us the parameters of a 
     // POST request is a convenient req.body object
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+    /*  app.use(bodyParser.json());
+     app.use(bodyParser.urlencoded({
+       extended: true
+     })); */
+
+    app.use(bodyParser.json({
+      limit: "50mb"
+    }));
+    app.use(bodyParser.urlencoded({
+      extended: true,
+      limit: '50mb'
+    }));
+
     app.use(express.static(__dirname + '/public'));
     //  app.use('/', express.static(__dirname + '/public', options));
     //  app.use('*', express.static(__dirname + '/public', options));
+
+
+
 
     var router = express.Router();
 
@@ -53,17 +69,6 @@ module.exports = {
       //continua con la prossima istruzione
       next();
     });
-    // Deliver a list of posts when we see just '/'
-
-    // router.get('/getTrip', function (req, res) {
-    //   context.db.trips.findAll(function (err, trips) {
-    //     if (err) {
-    //       res.send("Error :: " + err);
-    //     } else {
-    //       res.status(200).json(trips);
-    //     }
-    //   });
-    // });
 
     router.get('/getTrip/:id?', function (req, res) {
       let id = req.params['id'];
@@ -88,38 +93,91 @@ module.exports = {
 
       }
     });
-    // Save a new post when we see a POST request
-    // for /new (note this is enough to distinguish it
-    // from the route above)
+
     router.post('/addTrip', function (req, res) {
       var trip = req.body;
       console.log(trip);
-      // var trip = _.pick(req.body, 'title', 'body');
-      context.db.trips.insert(trip, function (err, trip) {
+
+      if (trip.stops != null && trip.stops.length > 0) {
+        trip.stops.forEach(stop => {
+          if (stop.images != null && stop.images.length > 0) {
+            stop.images.forEach(function (image, index, object) {
+
+              image.username = 'default';
+
+            });
+          }
+        });
+      }
+
+      function storeImagesByTrip(callback) {
+        imagesManager.storeImagesByTrip(trip, callback);
+      }
+
+      function insertTrip(callback) {
+        context.db.trips.insert(trip, function (err, trip) {
+          callback(err, 'insertTrip');
+        });
+      }
+
+      async.series([insertTrip], function (err, results) {
+
+        console.log("End Series " + results);
+
         if (err) {
-          // Probably a duplicate slug, ask the user to try again
-          // with a more distinctive title. We'll fix this
-          // automatically in our next installment
           res.send("Error :: " + err);
-        }
-        else {
-          res.status(200).json({ id: trip.id });
+        } else {
+          res.status(200).json({
+            id: trip.id
+          });
         }
       });
-    });
+
+    }); //--END post
+
+    router.post('/addImage', function (req, res) {
+      var image = req.body;
+      console.log(image);
+
+      image.name = 'test_' + new Date().getTime();
+      image.username = 'default';
+
+      function store(callback) {
+        imagesManager.store(image, callback);
+      }
+
+      async.series([store], function (err, results) {
+
+        console.log("End Series " + results);
+
+        if (err) {
+          //DELETE IMAGE
+          console.log("DELETE IMAGE :: " + err);
+          res.send("Error :: " + err);
+        } else {
+          //UPDATE TRIP
+          console.log("UPDATE TRIP");
+          res.status(200).json({
+            id: image.id
+          });
+
+        }
+
+      });
+
+    }); //--END post
+
     router.put('/updateTrip', function (req, res) {
       var trip = req.body;
       console.log(trip);
-      // var trip = _.pick(req.body, 'title', 'body');
+
       context.db.trips.update(trip, function (err, trip) {
         if (err) {
-          // Probably a duplicate slug, ask the user to try again
-          // with a more distinctive title. We'll fix this
-          // automatically in our next installment
           res.send("Error :: " + err);
-        }
-        else {
-          res.status(200).json({ id: trip.id });
+        } else {
+          res.status(200).json({
+            id: trip.id
+          });
         }
       });
 
@@ -129,17 +187,14 @@ module.exports = {
       let tripId = req.params['id'];
       context.db.trips.delete(tripId, function (err, trip) {
         if (err) {
-          // Probably a duplicate slug, ask the user to try again
-          // with a more distinctive title. We'll fix this
-          // automatically in our next installment
           res.send("Error :: " + err);
-        }
-        else {
-          res.status(200).json({ id: tripId });
+        } else {
+          res.status(200).json({
+            id: tripId
+          });
         }
       });
     });
-
 
     router.get('*', function (req, res) {
       notFound(res);
@@ -160,4 +215,3 @@ module.exports = {
     callback();
   }
 };
-

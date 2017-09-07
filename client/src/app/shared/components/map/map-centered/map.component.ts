@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-//import { Stop } from './../../../../shared/dto';
-//import * as ol from 'openlayers';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import * as ol from 'openlayers';
 
 
 @Component({
@@ -10,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@ang
 
 
 })
-export class MapCenteredComponent implements OnInit {
+export class MapCenteredComponent implements OnInit, AfterViewInit {
 
     height: string = '0vh';
     top: string = '0px';
@@ -19,18 +18,26 @@ export class MapCenteredComponent implements OnInit {
     map = null;
     markerLayer = null;
 
-    coordinates: [number,number];
-    @Output() addCoordinates: EventEmitter< [number, number]> = new EventEmitter();
+    iconGeometry: any;
+
+    @Input()
+    coordinates: [number, number];
+
+    @Output() addCoordinates: EventEmitter<[number, number]> = new EventEmitter();
+
 
     ngOnInit() {
+        this.height = '20vh';
+        this.mapOpened = true;
+    }
+    ngAfterViewInit() {
         this.openMap();
     }
 
     constructor() { }
 
     openMap() {
-        this.height = '20vh';
-        this.mapOpened = true;
+
         var _initMap = this.initMap;
         var _map = this.map;
         var _this = this;
@@ -41,8 +48,8 @@ export class MapCenteredComponent implements OnInit {
     }
 
     initMap() {
+        let coords: [number, number] = this.coordinates != null ? this.coordinates : [12.49, 41.90];
 
-        let coords: [number, number] = [11.162, 43.829];
         var transform = ol.proj.transform(coords, 'EPSG:4326', 'EPSG:3857');
 
         this.map = new ol.Map({
@@ -59,35 +66,39 @@ export class MapCenteredComponent implements OnInit {
             target: 'map_div',
             view: new ol.View({
                 center: transform,
-                zoom: 6
+                zoom: 5
             }),
             logo: false
         });
-        var _map = this.map;
 
-        var geolocation = new ol.Geolocation({
-            projection: this.map.getView().getProjection(),
-            tracking: true,
-            trackingOptions: {
-                enableHighAccuracy: true,
-                maximumAge: 2000
-            }
-        });
 
-        var acquiredPos = false;
-        geolocation.on('change', function () {
-            var gpsPos = geolocation.getPosition();
-            if (!acquiredPos && gpsPos && gpsPos != null) {
-                _map.getView().setCenter(gpsPos);
-                acquiredPos = true;
-            }
-        });
-      
         var center = this.map.getView().getCenter();
-
         this.drawPoint(center);
+
+        if (this.coordinates == null) {
+            var geolocation = new ol.Geolocation({
+                projection: this.map.getView().getProjection(),
+                tracking: true,
+                trackingOptions: {
+                    enableHighAccuracy: true,
+                    maximumAge: 2000
+                }
+            });
+
+            var _map = this.map;
+            geolocation.once('change:position', function (e) {
+                var gpsPos = geolocation.getPosition();
+                if (gpsPos && gpsPos != null) {
+                    _map.getView().setCenter(gpsPos);
+                    _map.updateSize();
+                    _map.renderSync();
+                    geolocation.setTracking(false);
+                }
+            });
+        }
+        
     }
-    iconGeometry: any;
+
     drawPoint(coords: [number, number]) {
         var iconGeometry = new ol.geom.Point(coords);
         var iconFeature = new ol.Feature({

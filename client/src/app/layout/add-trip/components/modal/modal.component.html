@@ -8,7 +8,9 @@
     <div class="modal-body">
         <div class="card-block">
 
-            <app-map-centered (coordinates)="coordinates" (addCoordinates)='onNotify($event)'></app-map-centered>
+            <!--  <app-map-centered (coordinates)="coordinates" (addCoordinates)='onNotify($event)'></app-map-centered>
+ -->
+            <app-map-centered [coordinates]="coordinates" (addCoordinates)='onNotify($event)'></app-map-centered>
 
             <fieldset class="form-group">
                 <label>Name</label>
@@ -25,15 +27,17 @@
                 <!-- <input type="file" (change)="onChange($event)" [multiple]="multiple" style="display: none;" /> -->
                 <!-- <input type="file" class="form-control-file" id="photo" (change)="onChange($event)"> -->
 
-                <input id="photo" type="file" class="form-control-file" (change)="fileChanged($event)" />
-                <!-- button to trigger the file upload when submitted -->
-                <button type="button" class="btn btn-success btn-s" (click)="upload()">Add</button>
+                <input id="photo" type="file" class="form-control-file" (change)="changeListener($event)" accept=".jpg, .jpeg, .png" multiple/>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-2" *ngFor="let tmpImages of base64Images">
+                        <img [src]="tmpImages" height="50" width="50" alt="Image preview..." />
+                        <!--  <img [src]="domSanitizer.bypassSecurityTrustUrl(tmpImages)"   height="50" width="50" alt="Image preview..."/> -->
+                    </div>
+                </div>
             </fieldset>
         </div>
-
-
-
-
 
     </div>
     <div class="modal-footer">
