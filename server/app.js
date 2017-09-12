@@ -76,7 +76,7 @@ module.exports = {
         console.log('findOneById/' + id);
         context.db.trips.findOneById(id, function (err, trip) {
           if (err) {
-            res.send("Error :: " + err);
+            res.status(500).send("Error :: " + err);
           } else {
             res.status(200).json(trip);
           }
@@ -85,7 +85,7 @@ module.exports = {
         console.log('findAll');
         context.db.trips.findAll(function (err, trips) {
           if (err) {
-            res.send("Error :: " + err);
+            res.status(500).send("Error :: " + err);
           } else {
             res.status(200).json(trips);
           }
@@ -104,7 +104,7 @@ module.exports = {
             stop.images.forEach(function (image, index, object) {
 
               image.username = 'default';
-
+              console.log('addTrip :: image.path :: '+image.path);
             });
           }
         });
@@ -125,7 +125,7 @@ module.exports = {
         console.log("End Series " + results);
 
         if (err) {
-          res.send("Error :: " + err);
+          res.status(500).send("Error :: " + err);
         } else {
           res.status(200).json({
             id: trip.id
@@ -153,7 +153,7 @@ module.exports = {
         if (err) {
           //DELETE IMAGE
           console.log("DELETE IMAGE :: " + err);
-          res.send("Error :: " + err);
+          res.status(500).send("Error :: " + err);
         } else {
           //UPDATE TRIP
           console.log("UPDATE TRIP");
@@ -173,7 +173,7 @@ module.exports = {
 
       context.db.trips.update(trip, function (err, trip) {
         if (err) {
-          res.send("Error :: " + err);
+          res.status(500).send("Error :: " + err);
         } else {
           res.status(200).json({
             id: trip.id
@@ -187,13 +187,28 @@ module.exports = {
       let tripId = req.params['id'];
       context.db.trips.delete(tripId, function (err, trip) {
         if (err) {
-          res.send("Error :: " + err);
+          res.status(500).send("Error :: " + err);
         } else {
           res.status(200).json({
             id: tripId
           });
         }
       });
+    });
+
+
+    router.put('/getImage', function (req, res) {
+      var img = req.body;
+     // console.log(img);
+      imagesManager.getImage(img, function (err, img) {
+        if (err) {
+          res.status(500).send("Error :: " + err);
+        } else {
+          res.status(200).json(img);
+        }
+      });
+     
+
     });
 
     router.get('*', function (req, res) {

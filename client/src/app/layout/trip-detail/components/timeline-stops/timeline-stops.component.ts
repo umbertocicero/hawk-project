@@ -12,7 +12,7 @@ declare var $: any;
   styleUrls: ['./timeline-stops.component.scss'],
   providers: [TripService]
 })
-export class TimelineStopsComponent implements OnInit, OnChanges  {
+export class TimelineStopsComponent implements OnInit, OnChanges {
 
   //@Input()
   trip: Trip;
@@ -28,23 +28,35 @@ export class TimelineStopsComponent implements OnInit, OnChanges  {
 
   mapOpened: boolean = false;
 
-  constructor() { }
+  private base64Images = [[]];
+
+  constructor(private services: TripService) { }
 
   ngOnInit() {
 
-    
-  } 
-  
+
+  }
+
   ngOnChanges() {
-    
+    var self = this;
     var trip = this.trip;
     if (trip != null && trip.stops != null) {
-      
+
       var features = [];
-      trip.stops.forEach(element => {
-        var coords: [number, number] = element.coordinates;
+      trip.stops.forEach(stop => {
+        var coords: [number, number] = stop.coordinates;
         if (coords) {
           this.mapOpened = true;
+        }
+
+        if (stop.images != null && stop.images.length > 0) {
+          stop.images.forEach(image => {
+            this.services.getImage(image, 'small').subscribe(data => {
+              var tmp = self.base64Images[stop.id];
+              if(!tmp) self.base64Images[stop.id] = [];
+              self.base64Images[stop.id].push(data);
+              });
+          });
         }
       });
     }

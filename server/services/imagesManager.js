@@ -24,11 +24,12 @@ module.exports = {
         }
 
         var imageBuffer = decodeBase64Image(data);
-        console.log(imageBuffer);
+       // console.log(imageBuffer);
 
         var path = 'images/' + image.username + '/' + image.path;
 
-        console.log(getDirName(path));
+        console.log('store :: path :: '+path);
+        console.log('store :: getDirName :: '+getDirName(path));
         mkdirp(getDirName(path), function (err) {
             if (err) return callback(err);
 
@@ -67,5 +68,19 @@ module.exports = {
             // All tasks are done now
             callback(err, 'storeTrip');
         });
+    },
+
+
+    getImage: function (image, callback) {
+        var self = this;
+        var path = 'images/' + image.username + '/' + image.path;
+        console.log(path);
+        fs.readFile(path, function (err, data) {
+            if (err) return callback(err, image);
+            var base64Image = new Buffer(data, 'binary').toString('base64');
+            image.base64 = 'data:image/png;base64,'+base64Image;
+            callback(err, image);
+        });
+
     }
 }

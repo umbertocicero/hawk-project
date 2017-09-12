@@ -24,7 +24,7 @@
     <h3>{{trip.description}}</h3>
     <p><small class="text-muted"><i class="fa fa-clock-o"></i> Created: {{trip.created}}</small> </p>
     <div [hidden]="!mapOpened">
-    <app-map-landscape [trip] = "trip" id="map"> </app-map-landscape>
+        <app-map-landscape [trip]="trip" id="map"> </app-map-landscape>
     </div>
     <ul class="timeline">
 
@@ -37,6 +37,12 @@
                 </div>
                 <div class="timeline-body">
                     <p>{{stop.description}}</p>
+                    <br *ngIf="base64Images[stop.id]"/>
+                    <div class="row">
+                        <div class="col-md-1" *ngFor="let tmpImages of base64Images[stop.id]">
+                            <img [src]="tmpImages.base64" height="50" width="50" alt="Image preview..." />
+                        </div>
+                    </div>
                 </div>
             </div>
         </li>

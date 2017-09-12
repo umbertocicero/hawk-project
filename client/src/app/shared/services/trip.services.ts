@@ -20,16 +20,13 @@ export class TripService {
 
   addTrip(trip: Trip, callback) {
 
-
-
-
-
-
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     var data: Trip = trip;
     var images: Image[] = [];
+//ciclare anche le foto fuori la tappa (a livello di trip)
+
     if (data.stops != null && data.stops.length > 0) {
 
       data.stops.forEach(stop => {
@@ -42,34 +39,14 @@ export class TripService {
             iTmp.id = image.id;
             var path = trip.id + '/' + stop.id + '/' + image.id + '.PNG';
             iTmp.path = path;
-            iTmp.base64 =(JSON.parse(JSON.stringify(image.base64)));;
+            iTmp.base64 = (JSON.parse(JSON.stringify(image.base64)));;
+            image.path = path;
             image.base64 = null;
             images.push(iTmp);
           });
         }
       });
     }
-
-
-
-    /*
-    return this.http.post(this.baseUrl + '/addTrip', data, options)
-      .map((res: Response) => {
-        //res.json(); 
-    
-        function foo() {
-          this.addImages(trip, function (e) {
-            console.log('finito addTrip:: ' + e);
-    
-            return res.json();
-          })
-        }
-        return foo();
-    
-    
-      });
-    
-    */
 
     var self = this;
 
@@ -83,7 +60,6 @@ export class TripService {
 
     });
 
-
     var addI = new Promise((resolve, reject) => {
       this.addImages(images, function (e) {
         console.log('finito addTrip:: ' + e);
@@ -96,8 +72,6 @@ export class TripService {
     }, reason => {
       console.log(reason)
     });
-
-
 
 
   }
@@ -144,6 +118,14 @@ export class TripService {
       .map((res: Response) => res.json());
   }
 
+  getImage(image, dim:string) {
+    let url = this.baseUrl + '/getImage';
+    image.dim = dim;
+    return this.http.put(url, image)
+      .map((res: Response) => {
+       return res.json();
+      });
+  }
 
   private handleError(error: Response | any): Promise<any> {
     // In a real world app, we might use a remote logging infrastructure
