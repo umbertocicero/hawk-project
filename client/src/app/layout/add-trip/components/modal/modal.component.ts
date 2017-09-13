@@ -20,6 +20,8 @@ export class ModalComponent implements OnInit {
 
     closeResult: string;
 
+    private base64Images = [];
+
     ngOnInit() {
 
     }
@@ -35,6 +37,13 @@ export class ModalComponent implements OnInit {
         if (stop != null) {
             edit = true;
             this.stop = stop;
+
+            if (stop.images != null && stop.images.length > 0) {
+                stop.images.forEach(image => {
+                    this.base64Images.push(image.base64);
+                })
+            }
+
         } else {
             this.stop = new Stop();
         }
@@ -46,25 +55,20 @@ export class ModalComponent implements OnInit {
             if (this.stop.name && this.stop.name.length > 0) {
                 this.stop.coordinates = this.coordinates;
 
-
                 var images = this.base64Images;
-                if(images!=null && images.length > 0){
-
-
+                if (images != null && images.length > 0) {
 
                     var s = this.stop.images = [] as [Image];
-                    images.forEach( img => {
+                    images.forEach(img => {
                         var image = new Image();
                         image.name = 'aaaaaaaaa';
                         image.base64 = img;
-                        
+
                         s.push(image);
                     })
 
-
-                    
+                    this.base64Images = [];
                 }
-
 
                 this.add.emit(
                     {
@@ -90,7 +94,7 @@ export class ModalComponent implements OnInit {
         }
     }
 
-    private base64Images = [];
+
 
     changeListener($event): void {
         this.readThis($event.target);
