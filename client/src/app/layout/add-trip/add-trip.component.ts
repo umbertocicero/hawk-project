@@ -31,7 +31,28 @@ export class AddTripComponent implements OnInit {
         this.route.params.subscribe(params => {
             var id = params['id'];
             if (id) {
-                this.services.getTrip(id).subscribe(data => { this.editMode = true; this.trip = data });
+                this.services.getTrip(id).subscribe(data => { 
+                    this.editMode = true; 
+                    this.trip = data;
+                    var trip = this.trip;
+                    if (trip != null && trip.stops != null) {
+                
+                      var features = [];
+                      trip.stops.forEach(stop => {
+                
+                        if (stop.images != null && stop.images.length > 0) {
+                          stop.images.forEach(image => {
+                            this.services.getImage(image, 'small').subscribe(data => {
+                                if(data){
+                                    image.base64 = data.base64;
+                                }
+                              });
+                          });
+                        }
+                      });
+                    }
+
+                 });
             }
         })
     }
