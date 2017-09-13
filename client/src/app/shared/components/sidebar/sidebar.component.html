@@ -1,15 +1,15 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
         <a routerLink="/home" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'home' | translate }}
+            <i class="fa fa-fw fa-home"></i>&nbsp;{{ 'home' | translate }}
         </a>
         <a routerLink="/trip-detail" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'trip-detail' | translate }}
+            <i class="fa fa-fw fa-asterisk"></i>&nbsp;{{ 'trip-detail' | translate }}
         </a>
         <a routerLink="/add-trip" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'add-trip' | translate }}
+            <i class="fa fa-fw fa-plus"></i>&nbsp;{{ 'add-trip' | translate }}
         </a>
-
+-----------------------
         <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'dashboard' | translate }}
         </a>

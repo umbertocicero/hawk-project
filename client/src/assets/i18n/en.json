@@ -1,5 +1,7 @@
 {
     "title": "Hawk",
+    "home": "Homepage",
+    "add-trip": "Add Trip",
     "dashboard": "Dashboard",
     "trip-detail": "Trip Detail",
     "charts": "Charts",

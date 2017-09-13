@@ -31,28 +31,30 @@ export class AddTripComponent implements OnInit {
         this.route.params.subscribe(params => {
             var id = params['id'];
             if (id) {
-                this.services.getTrip(id).subscribe(data => { 
-                    this.editMode = true; 
+                this.services.getTrip(id).subscribe(data => {
+                    this.editMode = true;
                     this.trip = data;
                     var trip = this.trip;
                     if (trip != null && trip.stops != null) {
-                
-                      var features = [];
-                      trip.stops.forEach(stop => {
-                
-                        if (stop.images != null && stop.images.length > 0) {
-                          stop.images.forEach(image => {
-                            this.services.getImage(image, 'small').subscribe(data => {
-                                if(data){
-                                    image.base64 = data.base64;
-                                }
-                              });
-                          });
-                        }
-                      });
+
+                        var features = [];
+                        trip.stops.forEach(stop => {
+
+                            if (stop.images != null && stop.images.length > 0) {
+                                stop.images.forEach(image => {
+                                    if (image.base64 == null) {
+                                        this.services.getImage(image, 'small').subscribe(data => {
+                                            if (data) {
+                                                image.base64 = data.base64;
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
                     }
 
-                 });
+                });
             }
         })
     }
@@ -63,15 +65,15 @@ export class AddTripComponent implements OnInit {
         if (this.editMode) {
             this.services.updateTrip(this.trip).subscribe(data => { this.router.navigate(['/trip-detail/' + data.id]); });
         } else {
-        /*     
-            this.services.addTrip(this.trip).subscribe(data => {
-                this.editMode = true;
-                this.trip.id = data.id;
-                this.router.navigate(['/trip-detail/' + data.id]);
-            });
- */
-var self = this;
-            this.services.addTrip(this.trip, function(data){
+            /*     
+                this.services.addTrip(this.trip).subscribe(data => {
+                    this.editMode = true;
+                    this.trip.id = data.id;
+                    this.router.navigate(['/trip-detail/' + data.id]);
+                });
+     */
+            var self = this;
+            this.services.addTrip(this.trip, function (data) {
                 self.editMode = true;
                 self.trip.id = data.id;
                 self.router.navigate(['/trip-detail/' + data.id]);
@@ -88,10 +90,10 @@ var self = this;
         if (type == 'add') {
             this.trip.stops.push(Object.assign({}, stop));
         } else if (type == 'edit') {
-            this.trip.stops.forEach(function(element, index, object){
-                if(element.id == stop.id){
+            this.trip.stops.forEach(function (element, index, object) {
+                if (element.id == stop.id) {
                     var newElement = Object.assign({}, stop)
-                    object.splice(index, 1,newElement);
+                    object.splice(index, 1, newElement);
                 }
             });
         }

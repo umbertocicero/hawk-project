@@ -123,7 +123,7 @@ export class TripService {
     image.dim = dim;
     return this.http.put(url, image)
       .map((res: Response) => {
-       return res.json();
+       return res.json() as Image;
       });
   }
 
