@@ -24,12 +24,7 @@ module.exports = {
         }
 
         var imageBuffer = decodeBase64Image(data);
-       // console.log(imageBuffer);
-
         var path = 'images/' + image.username + '/' + image.path;
-
-        console.log('store :: path :: '+path);
-        console.log('store :: getDirName :: '+getDirName(path));
         mkdirp(getDirName(path), function (err) {
             if (err) return callback(err);
 

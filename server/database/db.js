@@ -58,8 +58,9 @@ module.exports = db = {
       // Set the creation date/time
       trip.created = new Date();
       // Create a reasonable id from the title
-      trip.id = "trip_" + trip.created.getTime() + "_" + db.slugify(trip.name);
-
+      if(trip.id == null){
+        trip.id = "trip_" + trip.created.getTime() + "_" + db.slugify(trip.name);
+      }
       // Pass the 'safe' option so that we can tell immediately if
       // the insert fails (due to a duplicate id, for instance)
       tripCollection.insert(trip, { safe: true }, function (err) {

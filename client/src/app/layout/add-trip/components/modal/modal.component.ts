@@ -20,7 +20,7 @@ export class ModalComponent implements OnInit {
 
     closeResult: string;
 
-    private base64Images = [];
+    private base64Images = [] as [Image];
 
     ngOnInit() {
 
@@ -40,7 +40,7 @@ export class ModalComponent implements OnInit {
 
             if (stop.images != null && stop.images.length > 0) {
                 stop.images.forEach(image => {
-                    this.base64Images.push(image.base64);
+                    this.base64Images.push(image);
                 })
             }
 
@@ -60,14 +60,14 @@ export class ModalComponent implements OnInit {
 
                     var s = this.stop.images = [] as [Image];
                     images.forEach(img => {
+                       /* 
                         var image = new Image();
-                        image.name = 'aaaaaaaaa';
                         image.base64 = img;
-
-                        s.push(image);
+ */
+                        s.push(img);
                     })
 
-                    this.base64Images = [];
+                    this.base64Images =  [] as [Image];
                 }
 
                 this.add.emit(
@@ -79,7 +79,7 @@ export class ModalComponent implements OnInit {
             }
 
         }, (reason) => {
-            this.base64Images = [];
+            this.base64Images = [] as [Image];
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
     }
@@ -129,7 +129,10 @@ export class ModalComponent implements OnInit {
         var reader = new FileReader();
         var self = this;
         reader.addEventListener("load", function () {
-            self.base64Images[i] = reader.result;
+
+            var image = new Image();
+            image.base64 = reader.result;
+            self.base64Images[i] = image;
         }, false);
 
         if (file) {

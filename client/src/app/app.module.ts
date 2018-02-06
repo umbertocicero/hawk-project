@@ -8,6 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
+import { TripService } from './shared/services/trip.services';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {

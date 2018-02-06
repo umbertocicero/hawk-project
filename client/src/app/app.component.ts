@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { UtilService } from './shared/services/util.services';
+import { TripService } from './shared/services/trip.services';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    providers: [TripService, UtilService]
 })
 export class AppComponent {
     constructor(private translate: TranslateService) {

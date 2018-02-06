@@ -4,11 +4,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import { Stop, Image, Trip } from './../dto';
+import { UtilService } from './../services/util.services';
 
 @Injectable()
 export class TripService {
   // Resolve HTTP using the constructor
-  constructor(private http: Http) { }
+  constructor(private http: Http, private util: UtilService) { }
   // private instance variable to hold base url
   private baseUrl = 'http://localhost:3000';
 
@@ -25,29 +26,40 @@ export class TripService {
 
     var data: Trip = trip;
     var images: Image[] = [];
-//ciclare anche le foto fuori la tappa (a livello di trip)
+    //TODO ciclare anche le foto fuori la tappa (a livello di trip)
+    this.util.frorEachImageIntoStops(data, function (stop, image) {
+      var iTmp: Image = new Image();
 
-    if (data.stops != null && data.stops.length > 0) {
-
-      data.stops.forEach(stop => {
-        if (stop.images != null && stop.images.length > 0) {
-
-          stop.images.forEach(image => {
-
-            var iTmp: Image = new Image();
-
-            iTmp.id = image.id;
-            var path = trip.id + '/' + stop.id + '/' + image.id + '.PNG';
-            iTmp.path = path;
-            iTmp.base64 = (JSON.parse(JSON.stringify(image.base64)));;
-            image.path = path;
-            image.base64 = null;
-            images.push(iTmp);
+      iTmp.id = image.id;
+      var path = trip.id + '/' + stop.id + '/' + image.id + '.PNG';
+      iTmp.path = path;
+      iTmp.base64 = (JSON.parse(JSON.stringify(image.base64)));;
+      image.path = path;
+      image.base64 = null;
+      images.push(iTmp);
+    });
+    /*     
+        if (data.stops != null && data.stops.length > 0) {
+    
+          data.stops.forEach(stop => {
+            if (stop.images != null && stop.images.length > 0) {
+    
+              stop.images.forEach(image => {
+    
+                var iTmp: Image = new Image();
+    
+                iTmp.id = image.id;
+                var path = trip.id + '/' + stop.id + '/' + image.id + '.PNG';
+                iTmp.path = path;
+                iTmp.base64 = (JSON.parse(JSON.stringify(image.base64)));;
+                image.path = path;
+                image.base64 = null;
+                images.push(iTmp);
+              });
+            }
           });
         }
-      });
-    }
-
+     */
     var self = this;
 
     var r = null;
@@ -62,7 +74,7 @@ export class TripService {
 
     var addI = new Promise((resolve, reject) => {
       this.addImages(images, function (e) {
-        console.log('finito addTrip:: ' + e);
+        console.log('finito addI:: ' + e);
         resolve();
       });
     });
@@ -109,6 +121,20 @@ export class TripService {
 
   updateTrip(trip) {
     let data = trip;
+
+
+    this.util.frorEachImageIntoStops(data, function (stop, image) {
+      var iTmp: Image = new Image();
+
+      iTmp.id = image.id;
+      var path = trip.id + '/' + stop.id + '/' + image.id + '.PNG';
+      iTmp.path = path;
+      iTmp.base64 = (JSON.parse(JSON.stringify(image.base64)));;
+      image.path = path;
+      image.base64 = null;
+    //  images.push(iTmp);
+    });
+
     return this.http.put(this.baseUrl + '/updateTrip', data)
       .map((res: Response) => res.json());
   }
@@ -118,12 +144,12 @@ export class TripService {
       .map((res: Response) => res.json());
   }
 
-  getImage(image, dim:string) {
+  getImage(image, dim: string) {
     let url = this.baseUrl + '/getImage';
     image.dim = dim;
     return this.http.put(url, image)
       .map((res: Response) => {
-       return res.json() as Image;
+        return res.json() as Image;
       });
   }
 

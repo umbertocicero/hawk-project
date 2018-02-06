@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TripService } from './../../shared/services/trip.services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Trip, Stop, addId } from './../../shared/dto';
+import { Trip, Stop, getId } from './../../shared/dto';
 import { ModalComponent } from './components/modal/modal.component';
 
 @Component({
@@ -101,7 +101,7 @@ export class AddTripComponent implements OnInit {
 
     editStop(stop: Stop) {
         if (stop.id == null) {
-            addId(stop);
+            stop.id = getId();
         }
         this.addModal.open(Object.assign({}, stop));
     }

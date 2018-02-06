@@ -1,4 +1,5 @@
 export class Trip {
+    constructor() { this.id = guid(); }
     id: string;
     name: string;
     description: string;
@@ -6,7 +7,7 @@ export class Trip {
 }
 
 export class Stop {
-    constructor() { addId(this); }
+    constructor() { this.id = guid(); }
     id: string;
     name: string;
     description: string;
@@ -20,6 +21,7 @@ export class Image {
     description: string;
     base64: string;
     path: string;
+    isNew: boolean = true;
 }
 
 function guid() {
@@ -31,7 +33,6 @@ function guid() {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
 }
-export function addId(stop: Stop): string {
-    stop.id = guid();
-    return stop.id;
+export function getId(): string {
+    return guid();
 }
